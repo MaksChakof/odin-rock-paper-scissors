@@ -4,10 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Камень, ножницы, бумага</title>
+    <link rel="stylesheet" href="./style.css">
     <script src="./script.js" defer></script>
   </head>
   <body>
-    <h1>Камень, ножницы, бумага</h1>
-    <p>Игра идёт в консоли: открой DevTools (F12 → вкладка Console) и обнови страницу (F5).</p>
+    <main class="game">
+      <h1 class="game-title">Камень, ножницы, бумага</h1>
+      <p class="game-rules">Играем до 5 побед. Выбери свой ход:</p>
+
+      <!-- id кнопки = ход, который она делает -->
+      <div class="choices">
+        <button class="choice" id="rock" type="button">✊ Камень</button>
+        <button class="choice" id="paper" type="button">✋ Бумага</button>
+        <button class="choice" id="scissors" type="button">✌️ Ножницы</button>
+      </div>
+
+      <div class="scoreboard">
+        <p>Ты: <span id="human-score">0</span></p>
+        <p>Компьютер: <span id="computer-score">0</span></p>
+      </div>
+
+      <p class="round-result" id="round-result">Сделай первый ход!</p>
+      <p class="game-result" id="game-result"></p>
+      <button class="restart" id="restart" type="button" hidden>Новая игра</button>
+    </main>
   </body>
 </html>

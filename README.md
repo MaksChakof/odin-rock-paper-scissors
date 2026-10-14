@@ -1,14 +1,13 @@
 # Rock Paper Scissors
 
-Игра «камень, ножницы, бумага» против компьютера — проект курса [The Odin Project](https://www.theodinproject.com/lessons/foundations-rock-paper-scissors). Пять раундов, ходы вводятся через `prompt`, результаты выводятся в консоль браузера.
+Игра «камень, ножницы, бумага» против компьютера — проект курса [The Odin Project](https://www.theodinproject.com/lessons/foundations-revisiting-rock-paper-scissors). Ходы делаются кнопками, счёт и результаты показываются на странице, игра идёт до 5 побед.
 
-**Сыграть:** https://makschakof.github.io/odin-rock-paper-scissors/ (открой консоль: F12 → Console, затем F5)
+**Сыграть:** https://makschakof.github.io/odin-rock-paper-scissors/
 
 ## Что тренируется в проекте
 
-- функции с параметрами и `return`;
-- условия `if / else if / else`, логические операторы `&&` и `||`;
-- случайные числа: `Math.random()` и `Math.floor()`;
-- работа со строками: `trim()`, `toLowerCase()`, шаблонные строки;
-- область видимости: счёт игры хранится внутри `playGame`;
-- разбиение задачи на маленькие функции.
+- работа с DOM: `querySelector`, `querySelectorAll`, `textContent`;
+- события: `addEventListener` на группе кнопок через `forEach`;
+- состояние игры в переменных и обновление страницы после каждого хода;
+- функции с параметрами и `return`, условия, случайные числа;
+- ветки Git: интерфейс сделан в ветке `rps-ui` и слит в `main`.

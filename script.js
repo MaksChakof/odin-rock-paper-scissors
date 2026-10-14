@@ -1,3 +1,16 @@
+const WINNING_SCORE = 5; // играем до пяти побед
+
+let humanScore = 0;
+let computerScore = 0;
+
+// ===== Элементы страницы =====
+const choiceButtons = document.querySelectorAll(".choice");
+const humanScoreElement = document.querySelector("#human-score");
+const computerScoreElement = document.querySelector("#computer-score");
+const roundResultElement = document.querySelector("#round-result");
+const gameResultElement = document.querySelector("#game-result");
+const restartButton = document.querySelector("#restart");
+
 // ===== Ход компьютера =====
 function getComputerChoice() {
   const randomNumber = Math.floor(Math.random() * 3); // 0, 1 или 2
@@ -11,22 +24,7 @@ function getComputerChoice() {
   }
 }
 
-// ===== Ход игрока =====
-function getHumanChoice() {
-  const answer = prompt("Твой ход: rock, paper или scissors?");
-
-  if (answer === null) {
-    return ""; // нажали «Отмена» — пустой ход
-  }
-
-  return answer.trim().toLowerCase(); // "  RoCk " → "rock": регистр и пробелы не важны
-}
-
 // ===== Помощники =====
-function isValidChoice(choice) {
-  return choice === "rock" || choice === "paper" || choice === "scissors";
-}
-
 // true, если первый ход бьёт второй
 function beats(first, second) {
   return (
@@ -61,42 +59,56 @@ function describeWin(winner, loser) {
   return `${nameWho(winner)} ${verb} ${nameWhat(loser)}`;
 }
 
-// ===== Игра из пяти раундов =====
-function playGame() {
-  const ROUNDS = 5;
-  let humanScore = 0;
-  let computerScore = 0;
-
-  function playRound(humanChoice, computerChoice) {
-    if (!isValidChoice(humanChoice)) {
-      console.log(`Ход «${humanChoice}» не подходит, нужно rock, paper или scissors. Раунд не засчитан.`);
-      return;
-    }
-
-    if (humanChoice === computerChoice) {
-      console.log(`Ничья: оба выбрали ${nameWhat(humanChoice)}.`);
-    } else if (beats(humanChoice, computerChoice)) {
-      humanScore++;
-      console.log(`Раунд твой: ${describeWin(humanChoice, computerChoice)}.`);
-    } else {
-      computerScore++;
-      console.log(`Раунд за компьютером: ${describeWin(computerChoice, humanChoice)}.`);
-    }
-  }
-
-  for (let round = 1; round <= ROUNDS; round++) {
-    console.log(`--- Раунд ${round} из ${ROUNDS} ---`);
-    playRound(getHumanChoice(), getComputerChoice());
-    console.log(`Счёт: ты ${humanScore} — компьютер ${computerScore}`);
-  }
-
-  if (humanScore > computerScore) {
-    console.log("Итог: победа за тобой!");
-  } else if (computerScore > humanScore) {
-    console.log("Итог: победил компьютер.");
+// ===== Игра =====
+function playRound(humanChoice, computerChoice) {
+  if (humanChoice === computerChoice) {
+    roundResultElement.textContent = `Ничья: оба выбрали ${nameWhat(humanChoice)}.`;
+  } else if (beats(humanChoice, computerChoice)) {
+    humanScore++;
+    roundResultElement.textContent = `Раунд твой: ${describeWin(humanChoice, computerChoice)}.`;
   } else {
-    console.log("Итог: ничья.");
+    computerScore++;
+    roundResultElement.textContent = `Раунд за компьютером: ${describeWin(computerChoice, humanChoice)}.`;
   }
+
+  updateScore();
+  checkGameOver();
 }
 
-playGame();
+function updateScore() {
+  humanScoreElement.textContent = humanScore;
+  computerScoreElement.textContent = computerScore;
+}
+
+function checkGameOver() {
+  if (humanScore < WINNING_SCORE && computerScore < WINNING_SCORE) {
+    return; // никто ещё не набрал 5 очков — играем дальше
+  }
+
+  gameResultElement.textContent = humanScore === WINNING_SCORE ? "Победа за тобой! 🎉" : "Победил компьютер.";
+  choiceButtons.forEach((button) => {
+    button.disabled = true; // после конца игры ходить нельзя
+  });
+  restartButton.hidden = false;
+}
+
+function resetGame() {
+  humanScore = 0;
+  computerScore = 0;
+  updateScore();
+  roundResultElement.textContent = "Сделай первый ход!";
+  gameResultElement.textContent = "";
+  choiceButtons.forEach((button) => {
+    button.disabled = false;
+  });
+  restartButton.hidden = true;
+}
+
+// ===== События =====
+choiceButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    playRound(button.id, getComputerChoice()); // id кнопки — это ход: "rock", "paper" или "scissors"
+  });
+});
+
+restartButton.addEventListener("click", resetGame); // передаём саму функцию, без скобок

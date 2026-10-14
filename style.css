@@ -1,0 +1,92 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;               /* игра по центру экрана */
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  background-color: #1f2937;
+  color: #f9faf8;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.game {
+  max-width: 520px;
+  padding: 32px 24px;
+  text-align: center;
+}
+
+.game-title {
+  margin: 0 0 8px;
+  font-size: 36px;
+}
+
+.game-rules {
+  margin: 0 0 24px;
+  color: #e5e7eb;
+}
+
+/* ===== Кнопки ===== */
+.choices {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.choice,
+.restart {
+  padding: 12px 20px;
+  border: 2px solid #3882f6;
+  border-radius: 8px;
+  background-color: #3882f6;
+  color: #f9faf8;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;             /* курсор-«рука» при наведении */
+}
+
+.choice:hover {
+  background-color: #2563eb;
+}
+
+.choice:disabled {
+  opacity: 0.4;                /* после конца игры кнопки бледные */
+  cursor: not-allowed;
+}
+
+.restart {
+  background-color: transparent;
+}
+
+/* ===== Счёт и результаты ===== */
+.scoreboard {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  font-size: 20px;
+}
+
+.scoreboard p {
+  margin: 0;
+}
+
+.round-result {
+  min-height: 24px;
+  margin: 24px 0 8px;
+  font-size: 18px;
+}
+
+.game-result {
+  min-height: 32px;
+  margin: 0 0 16px;
+  color: #facc15;
+  font-size: 26px;
+  font-weight: bold;
+}
